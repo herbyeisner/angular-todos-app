@@ -20,7 +20,7 @@ jobs:
     needs: quality-check
     env:
       TAG_DYNAMIC: ${{ github.ref_name }}-${{ github.run_id }}     
-      IMAGE_NAME: angular-todos-app
+      IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/angular-todos-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
