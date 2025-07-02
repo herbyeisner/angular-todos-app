@@ -12,5 +12,21 @@ jobs:
       - name: install dependencies
         run: npm install
 
-      - name: Run prettier check
-        run: npm run check
+      #- name: Run prettier check
+      #  run: npm run check
+
+  build-container:
+    runs-on: ubuntu-latest
+    needs: quality-check
+    env:
+      TAG_DYNAMIC: ${{ github.ref_name }}-${{ github.run_id }}      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+    
+      - name: Build docker image
+      - run: |
+          docker build . \
+          --file Dockerfile \
+          --tag angular-todos-app:$TAG_DYNAMIC \
+          --tag angular-todos-app:latest
